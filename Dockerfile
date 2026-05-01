@@ -9,8 +9,12 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy all other source files including .env so Vite can access VITE_GEMINI_API_KEY during build
+# Copy all source files
 COPY . .
+
+# Use build-time argument for the API key
+ARG VITE_GEMINI_API_KEY
+ENV VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY
 
 # Build the Vite React app
 RUN npm run build
