@@ -1,16 +1,62 @@
-# React + Vite
+# 🗳️ Civic Guide: Indian Election Process Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Civic Guide is an interactive, AI-powered web application designed to educate Indian citizens about the democratic process. By combining a static information dashboard with a conversational AI assistant, the project makes complex civic concepts accessible, engaging, and easy to understand.
 
-Currently, two official plugins are available:
+![Civic Guide Dashboard Preview](https://raw.githubusercontent.com/Vaishali-Premani/Election-Process-Assistant/main/preview.png) *(Placeholder for your preview image)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+- **Interactive AI Assistant:** Powered by Google Gemini, the assistant provides step-by-step guidance tailored to the user's knowledge level (Beginner, Intermediate, or Expert).
+- **Quick Knowledge Base:** A static, chat-style interface for immediate answers to frequently asked questions about voting and the electoral process.
+- **2024 Election Highlights:** A dedicated timeline for the 18th Lok Sabha elections, featuring key dates and phases.
+- **Voter's Checklist:** Essential action items for citizens to ensure they are ready to vote.
+- **Live News Integration:** Quick links to the official Election Commission of India (ECI) portal and major news trackers.
+- **Responsive Design:** A modern, "Civic-themed" UI that works seamlessly across desktops and mobile devices.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** [React.js](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **AI Engine:** [Google Gemini API](https://ai.google.dev/)
+- **Styling:** Custom CSS (Modern, Clean, Accessible)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **DevOps:** Docker, Nginx
+- **Deployment:** Google Cloud Run
+- **CI/CD:** Google Cloud Build
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 💻 Local Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Vaishali-Premani/Election-Process-Assistant.git
+   cd Election-Process-Assistant
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables:**
+   Create a `.env` file in the root directory and add your Gemini API Key:
+   ```env
+   VITE_GEMINI_API_KEY=your_api_key_here
+   ```
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+## ☁️ Deployment
+
+The project is configured for automated deployment to **Google Cloud Run** using **Cloud Build**.
+
+- **Dockerfile:** Multi-stage build using Node.js for building the React app and Nginx for serving the static files.
+- **Cloud Build:** Triggered on every push to the `main` branch. It injects the `VITE_GEMINI_API_KEY` during the build process and deploys the container to Cloud Run.
+
+## 📜 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+*Created with ❤️ to empower the citizens of India.*
