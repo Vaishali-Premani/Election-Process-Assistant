@@ -16,6 +16,9 @@ COPY . .
 ARG VITE_GEMINI_API_KEY
 ENV VITE_GEMINI_API_KEY=$VITE_GEMINI_API_KEY
 
+# Force create a .env file so Vite definitely sees it
+RUN echo "VITE_GEMINI_API_KEY=${VITE_GEMINI_API_KEY}" > .env
+
 # Build the Vite React app
 RUN npm run build
 
