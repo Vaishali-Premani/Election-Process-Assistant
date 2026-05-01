@@ -1,0 +1,27 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '--build-arg', 'VITE_GEMINI_API_KEY=$_VITE_GEMINI_API_KEY',
+      '-t', 'gcr.io/$PROJECT_ID/election-process-assistant:$COMMIT_SHA',
+      '.'
+    ]
+
+  # Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/election-process-assistant:$COMMIT_SHA']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args: [
+      'run', 'deploy', 'election-process-assistant',
+      '--image', 'gcr.io/$PROJECT_ID/election-process-assistant:$COMMIT_SHA',
+      '--region', 'asia-south2',
+      '--platform', 'managed',
+      '--allow-unauthenticated'
+    ]
+
+images:
+  - 'gcr.io/$PROJECT_ID/election-process-assistant:$COMMIT_SHA'
