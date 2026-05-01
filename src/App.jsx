@@ -213,7 +213,7 @@ function App() {
       setGenAI(ai);
       
       const model = ai.getGenerativeModel({ 
-        model: "gemini-2.0-flash",
+        model: "gemini-1.5-flash",
         systemInstruction: SYSTEM_PROMPT.replace('{KNOWLEDGE_LEVEL}', level)
       });
       
