@@ -1,101 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { Bot, User, CheckCircle2, Circle, Send, Info, Calendar, Newspaper, ArrowRight, UserPlus, Search, Users, Vote, X, ExternalLink } from 'lucide-react';
+import { Bot, User, CheckCircle2, Circle, Send, Info, Calendar, Newspaper, ArrowRight } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import './App.css';
 
-// --- Data ---
-
-const PROCESS_STEPS = [
-  {
-    id: 1,
-    phase: "PHASE 01",
-    title: "Voter Registration",
-    icon: <UserPlus size={24} />,
-    summary: "Register via Form 6 if you are 18+ or update details using Form 8.",
-    details: "Indian citizens can register online via the NVSP portal or Voter Helpline App. You need a passport-sized photo, age proof, and residence proof. First-time voters should use Form 6, while those needing corrections use Form 8.",
-    keyResource: "Official guidance for voter registration.",
-    recommendedAction: "Complete this step before next deadline.",
-    highPriority: true
-  },
-  {
-    id: 2,
-    phase: "PHASE 02",
-    title: "Check Electoral Roll",
-    icon: <Search size={24} />,
-    summary: "Verify your name in the Voter List to ensure you can cast your vote.",
-    details: "Even if you have an EPIC card, your name must be in the current Electoral Roll. You can check this on the ECI website or via the Voter Helpline App using your EPIC number or personal details.",
-    keyResource: "Official guidance for check electoral roll.",
-    recommendedAction: "Complete this step before next deadline.",
-    highPriority: false
-  },
-  {
-    id: 3,
-    phase: "PHASE 03",
-    title: "Know Your Candidate",
-    icon: <Users size={24} />,
-    summary: "Check candidate credentials, criminal records, and assets via KYC.",
-    details: "The Election Commission of India provides the \"Know Your Candidate\" (KYC) app where you can view affidavits filed by candidates, including their education, assets, and any criminal history.",
-    keyResource: "Official guidance for know your candidate.",
-    recommendedAction: "Complete this step before next deadline.",
-    highPriority: false
-  },
-  {
-    id: 4,
-    phase: "PHASE 04",
-    title: "Polling Day",
-    icon: <Vote size={24} />,
-    summary: "Carry your EPIC card or valid ID and find your polling booth.",
-    details: "On election day, identify your designated polling station. If you don't have an EPIC card, you can use any of the 12 alternative photo identity documents approved by the ECI, such as Aadhaar, PAN, or Passport.",
-    keyResource: "Official guidance for polling day.",
-    recommendedAction: "Complete this step before next deadline.",
-    highPriority: false
-  }
-];
-
 // --- Components ---
-
-const GuideModal = ({ step, onClose, onNext }) => {
-  if (!step) return null;
-
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content animate-fade-in" onClick={e => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose} aria-label="Close">
-          <X size={20} />
-        </button>
-        
-        <div className="modal-header">
-          <div className="header-top">
-            <span className="phase-label">{step.phase}</span>
-            {step.highPriority && <span className="priority-tag">HIGH PRIORITY</span>}
-          </div>
-          <h2>{step.title}</h2>
-        </div>
-
-        <div className="modal-body">
-          <p className="description">{step.details}</p>
-          
-          <div className="resource-grid">
-            <div className="resource-box">
-              <h4>Key Resource</h4>
-              <p>{step.keyResource}</p>
-            </div>
-            <div className="resource-box">
-              <h4>Recommended Action</h4>
-              <p>{step.recommendedAction}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="modal-footer">
-          <button className="continue-btn" onClick={() => onNext(step.id)}>
-            {step.id === 4 ? "Finish Guide" : "Continue to Next Step"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Sidebar = ({ topics, currentTopicId }) => (
   <aside className="sidebar">
@@ -132,7 +40,6 @@ const Sidebar = ({ topics, currentTopicId }) => (
 
 const HomePage = ({ onStart }) => {
   const [knowledgeLevel, setKnowledgeLevel] = useState('beginner');
-  const [activeStep, setActiveStep] = useState(null);
 
   const staticKnowledge = [
     { q: "Who can vote in India?", a: "Any Indian citizen aged 18 or above with a valid Voter ID (EPIC) can vote." },
@@ -157,44 +64,11 @@ const HomePage = ({ onStart }) => {
     "Understand the working of VVPAT"
   ];
 
-  const handleNextStep = (currentId) => {
-    if (currentId < 4) {
-      setActiveStep(PROCESS_STEPS.find(s => s.id === currentId + 1));
-    } else {
-      setActiveStep(null);
-    }
-  };
-
   return (
     <div className="home-page animate-fade-in">
       <section className="hero-section">
         <h1>Civic Guide</h1>
         <p>Empowering citizens through interactive knowledge of the Indian Democratic Process.</p>
-      </section>
-
-      <section className="process-guide-section">
-        <div className="section-header">
-          <h2>Election Process Guide</h2>
-          <p>Follow these simple steps to ensure your voice is heard.</p>
-        </div>
-        
-        <div className="process-steps-grid">
-          {PROCESS_STEPS.map(step => (
-            <div key={step.id} className="process-card">
-              <div className="step-indicator">
-                <div className="step-number">{step.id}</div>
-              </div>
-              <div className="process-card-content">
-                <span className="step-label">STEP {step.id}</span>
-                <h3>{step.title}</h3>
-                <p>{step.summary}</p>
-                <button className="read-guide-link" onClick={() => setActiveStep(step)}>
-                  Read Guide <ArrowRight size={14} />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
       </section>
 
       <div className="home-grid">
@@ -280,12 +154,6 @@ const HomePage = ({ onStart }) => {
           </div>
         </div>
       </div>
-
-      <GuideModal 
-        step={activeStep} 
-        onClose={() => setActiveStep(null)} 
-        onNext={handleNextStep}
-      />
     </div>
   );
 };
