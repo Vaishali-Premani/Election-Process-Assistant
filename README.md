@@ -2,6 +2,9 @@
 
 Civic Guide is an interactive, AI-powered web application designed to educate Indian citizens about the democratic process. By combining a static information dashboard with a conversational AI assistant, the project makes complex civic concepts accessible, engaging, and easy to understand.
 
+[**🌐 Live Demo**](https://election-process-assistant-894816034623.asia-south2.run.app)
+
+
 ![Civic Guide Dashboard Preview](https://raw.githubusercontent.com/Vaishali-Premani/Election-Process-Assistant/main/preview.png) *(Placeholder for your preview image)*
 
 ## 🚀 Features
@@ -54,9 +57,11 @@ The project is configured for automated deployment to **Google Cloud Run** using
 - **Dockerfile:** Multi-stage build using Node.js for building the React app and Nginx for serving the static files.
 - **Cloud Build:** Triggered on every push to the `main` branch. It injects the `VITE_GEMINI_API_KEY` during the build process and deploys the container to Cloud Run.
 
-## 📜 License
+---
+## 🔗 Live Demo
 
-This project is open-source and available under the [MIT License](LICENSE).
+Experience the assistant live: [Civic Guide - Election Process Assistant](https://election-process-assistant-894816034623.asia-south2.run.app)
 
 ---
 *Created with ❤️ to empower the citizens of India.*
+
